@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-07-24 17:52:24
- * @LastEditTime: 2022-07-24 18:09:28
+ * @LastEditTime: 2022-07-24 22:09:57
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\demo_for.go
@@ -11,7 +11,7 @@ package main
 
 import "fmt"
 
-func main() {
+func main1() {
 	for i := 0; i < 10; i++ {
 		fmt.Printf("i: %v\n", i)
 	}

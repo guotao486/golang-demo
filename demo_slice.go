@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-07-25 09:52:36
- * @LastEditTime: 2022-07-25 10:24:04
+ * @LastEditTime: 2022-07-25 22:04:15
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\demo_slice.go
@@ -52,10 +52,11 @@ func main1() {
 	g = append(g[:3], g[4:]...)
 	fmt.Printf("g: %v\n", g)
 
+	// 浅拷贝，指向同一个内存地址，一个值改变另一个也会改变
 	h := []int{5, 4, 3, 2, 1}
 	fmt.Printf("h: %p\n", h)
 	fmt.Printf("h: %v\n", h)
-	// 浅拷贝，指向同一个内存地址，一个值改变另一个也会改变
+
 	i := h
 	fmt.Printf("i: %p\n", i)
 	i[0] = 100

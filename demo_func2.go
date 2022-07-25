@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-07-25 16:42:10
- * @LastEditTime: 2022-07-25 17:08:20
+ * @LastEditTime: 2022-07-25 17:11:36
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\demo_func2.go
@@ -77,7 +77,7 @@ func ff2_2(a int) int {
 		return a
 	}
 }
-func main() {
+func main1() {
 	// 将函数sayHello当成参数
 	ff2_1("tom", sayHello)
 

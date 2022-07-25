@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-07-25 17:43:05
- * @LastEditTime: 2022-07-25 17:59:47
+ * @LastEditTime: 2022-07-25 20:56:46
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\demo_needle.go
@@ -11,7 +11,7 @@ package main
 
 import "fmt"
 
-func main() {
+func main1() {
 	var a = 10
 	ip := &a
 	fmt.Printf("a: %p\n", &a)

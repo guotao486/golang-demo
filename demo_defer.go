@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-07-25 17:12:24
- * @LastEditTime: 2022-07-25 17:16:30
+ * @LastEditTime: 2022-07-25 17:34:32
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\demo_defer.go
@@ -14,7 +14,7 @@ import "fmt"
 func defer_f() {
 	fmt.Println("defer end....")
 }
-func main() {
+func main1() {
 	fmt.Println("start....")
 
 	defer defer_f()

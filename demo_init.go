@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-07-25 17:34:42
- * @LastEditTime: 2022-07-25 17:35:21
+ * @LastEditTime: 2022-07-25 17:46:10
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\demo_init.go
@@ -17,6 +17,6 @@ func init() {
 func init() {
 	fmt.Println("init2")
 }
-func main() {
+func main1() {
 	fmt.Println("main...")
 }

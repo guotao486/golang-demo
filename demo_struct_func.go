@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-07-25 21:49:58
- * @LastEditTime: 2022-07-25 22:28:27
+ * @LastEditTime: 2022-07-26 15:02:15
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\demo_struct_func.go
@@ -22,7 +22,7 @@ func (p *f_person) setName(name string) {
 	p.name = name
 	fmt.Printf("p.name: %v\n", p.name)
 }
-func main() {
+func main1() {
 	var per f_person
 	per.name = "tom"
 	fmt.Printf("per: %v\n", per)

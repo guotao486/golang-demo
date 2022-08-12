@@ -1,10 +1,10 @@
 /*
  * @Author: GG
  * @Date: 2022-08-01 22:51:24
- * @LastEditTime: 2022-08-01 23:01:08
+ * @LastEditTime: 2022-08-12 11:04:42
  * @LastEditors: GG
  * @Description:
- * @FilePath: \golang-demo\demo_ioutil.go
+ * @FilePath: \golang-demo\ioutil\demo_ioutil.go
  *
  */
 package main
@@ -15,7 +15,7 @@ import (
 	"strings"
 )
 
-func main1() {
+func main() {
 	// 读取数据
 	r := strings.NewReader("abcdefg")
 	f, _ := ioutil.ReadAll(r)

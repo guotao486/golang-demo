@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-15 09:57:25
- * @LastEditTime: 2022-08-15 11:40:59
+ * @LastEditTime: 2022-08-15 16:19:31
  * @LastEditors: GG
  * @Description:decoding json 实现json的编码和解码
  * @FilePath: \golang-demo\encoding_json\demo_json.go
@@ -88,10 +88,15 @@ func test2() {
 
 // io 读文件内容解码
 func test3() {
+	// 打开文件
 	f, _ := os.Open("a.json")
+	// 执行完成后关闭文件
 	defer f.Close()
+	// 将文件句柄传入
 	d := json.NewDecoder(f)
+	// 转换后的类型
 	var v map[string]interface{}
+	// 读取并解码
 	d.Decode(&v)
 
 	fmt.Printf("v: %v\n", v)
@@ -113,9 +118,13 @@ func test4() {
 		Parent: []string{"big tom", "big kite"},
 	}
 
+	// 打开文件
 	f, _ := os.OpenFile("a.json", os.O_WRONLY, 0777)
+	// 执行完成后关闭文件
 	defer f.Close()
+	// 将文件句柄传入
 	e := json.NewEncoder(f)
+	// 编码并写入
 	e.Encode(p)
 }
 

@@ -1,24 +1,18 @@
 /*
  * @Author: GG
  * @Date: 2022-08-16 09:59:50
- * @LastEditTime: 2022-08-16 11:15:47
+ * @LastEditTime: 2022-08-16 11:22:23
  * @LastEditors: GG
- * @Description:
- * @FilePath: \golang-demo\database\mysql\select\select.go
+ * @Description: mysql select
+ * @FilePath: \golang-demo\database\mysql\curd\select.go
  *
  */
-package query
+package curd
 
 import (
 	"database/sql"
 	"fmt"
 )
-
-type User struct {
-	id       int
-	username string
-	password string
-}
 
 func QueryRowDemo(DB *sql.DB) {
 	sqlStr := "select id, username, password from user_tbl where id=?"

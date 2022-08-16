@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-15 16:52:11
- * @LastEditTime: 2022-08-16 11:08:40
+ * @LastEditTime: 2022-08-16 11:19:25
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\database\mysql\index.go
@@ -11,8 +11,8 @@ package main
 
 import (
 	"fmt"
+	"golang-demo/database/mysql/curd"
 	initDB "golang-demo/database/mysql/init"
-	query "golang-demo/database/mysql/select"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -25,6 +25,6 @@ func main() {
 	} else {
 		fmt.Printf("初始化成功")
 	}
-	query.QueryRowDemo(initDB.DB)
-	query.QueryMuiltDemo(initDB.DB)
+	curd.QueryRowDemo(initDB.DB)
+	curd.QueryMuiltDemo(initDB.DB)
 }

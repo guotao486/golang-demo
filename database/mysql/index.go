@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-15 16:52:11
- * @LastEditTime: 2022-08-16 11:32:43
+ * @LastEditTime: 2022-08-16 12:00:32
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\database\mysql\index.go
@@ -36,4 +36,9 @@ func main() {
 	fmt.Println("查询多条数据：")
 	curd.QueryMuiltDemo(initDB.DB)
 
+	//删除一行
+	// curd.Delete(initDB.DB)
+
+	// 修改一行
+	curd.Update(initDB.DB)
 }

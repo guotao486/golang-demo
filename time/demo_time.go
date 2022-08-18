@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-13 10:10:35
- * @LastEditTime: 2022-08-13 11:50:14
+ * @LastEditTime: 2022-08-18 18:02:55
  * @LastEditors: GG
  * @Description: time标准库
  * @FilePath: \golang-demo\time\demo_time.go
@@ -10,7 +10,9 @@
 package main
 
 import (
+	"crypto/md5"
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -159,7 +161,19 @@ func main() {
 	// equal()
 	// before()
 	// after()
-	format()
+	// format()
 	formatString()
+	str := Md5Crypt("123", "111", "222")
+	fmt.Printf("str: %v\n", str)
+}
 
+func Md5Crypt(str string, salt ...interface{}) (CryptStr string) {
+	fmt.Printf("str: %v\n", str)
+	fmt.Printf("salt: %v\n", salt)
+	if l := len(salt); l > 0 {
+		slice := make([]string, l+1)
+		str = fmt.Sprintf(str+strings.Join(slice, "%v"), salt...)
+	}
+	fmt.Printf("str: %v\n", str)
+	return fmt.Sprintf("%x", md5.Sum([]byte(str)))
 }

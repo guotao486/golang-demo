@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-12 11:08:26
- * @LastEditTime: 2022-08-12 11:55:02
+ * @LastEditTime: 2022-08-18 09:27:33
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\log\demo_log.go
@@ -70,10 +70,10 @@ func test6() {
 	log.Print("my log...")
 }
 func main() {
-	// test1()
-	// test2()
-	// test3()
+	test1()
+	test2()
+	test3()
 	// test4()
 	// test5()
-	test6()
+	// test6()
 }

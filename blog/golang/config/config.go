@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-17 17:19:41
- * @LastEditTime: 2022-08-17 18:04:05
+ * @LastEditTime: 2022-08-17 19:43:54
  * @LastEditors: GG
  * @Description:config struct
  * @FilePath: \golang-demo\blog\golang\config\config.go
@@ -14,6 +14,8 @@ import (
 
 	"github.com/BurntSushi/toml"
 )
+
+var Cfg *TomlConfig
 
 type TomlConfig struct {
 	Viewer Viewer
@@ -43,10 +45,8 @@ type SystemConfig struct {
 	ValineServerURL string
 }
 
-var Cfg *TomlConfig
-
 func init() {
-	Cfg := new(TomlConfig)
+	Cfg = new(TomlConfig)
 	var err error
 	Cfg.System.CurrentDir, err = os.Getwd()
 

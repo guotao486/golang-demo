@@ -1,10 +1,10 @@
 /*
  * @Author: GG
  * @Date: 2022-08-17 17:22:46
- * @LastEditTime: 2022-08-17 17:23:01
+ * @LastEditTime: 2022-08-19 11:53:09
  * @LastEditors: GG
  * @Description:
- * @FilePath: \golang-demo\blog\golang\config\category.go
+ * @FilePath: \golang-demo\blog\golang\models\category.go
  *
  */
 package models
@@ -14,4 +14,9 @@ type Category struct {
 	Name     string
 	CreateAt string
 	UpdateAt string
+}
+
+type CategoryResponse struct {
+	*HomeResponse
+	CategoryName string
 }

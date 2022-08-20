@@ -1,3 +1,12 @@
+<!--
+ * @Author: GG
+ * @Date: 2022-08-17 16:40:03
+ * @LastEditTime: 2022-08-20 10:49:42
+ * @LastEditors: GG
+ * @Description: 
+ * @FilePath: \golang-demo\blog\golang\template\writing.html
+ * 
+-->
 <!DOCTYPE html>
 <html>
   <head>
@@ -25,8 +34,10 @@
             <span class="publish-close">×</span>
             <h1 class="category-label">分类：</h1>
             <ul class="category category-style">
-              {{range $index, $elem := .categorys}}
-              <li value="{{$elem.Cid}}">{{$elem.Name}}</li>
+              {{range $index, $elem := .Categorys}}
+              {{$index}}
+              {{$elem}}
+              <!-- <li value="{{$elem.Cid}}">{{$elem.Name}}</li> -->
               {{end}}
             </ul>
             <h1 class="category-label">类型：</h1>

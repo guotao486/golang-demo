@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-17 17:23:35
- * @LastEditTime: 2022-08-17 17:24:00
+ * @LastEditTime: 2022-08-20 10:39:25
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\blog\golang\models\post.go
@@ -64,4 +64,10 @@ type PostRes struct {
 	config.Viewer
 	config.SystemConfig
 	Article PostMore
+}
+
+type WritingRes struct {
+	Title     string
+	CdnURL    string
+	Categorys []Category
 }

@@ -1,10 +1,10 @@
 /*
  * @Author: GG
- * @Date: 2022-08-18 10:40:23
- * @LastEditTime: 2022-08-20 10:02:03
+ * @Date: 2022-08-19 11:08:56
+ * @LastEditTime: 2022-08-20 10:01:05
  * @LastEditors: GG
- * @Description:category service
- * @FilePath: \golang-demo\blog\golang\service\index.go
+ * @Description:categoty service
+ * @FilePath: \golang-demo\blog\golang\service\category.go
  *
  */
 package service
@@ -16,17 +16,18 @@ import (
 	"html/template"
 )
 
-func GetAllIndexInfo(page, pageSize int) (*models.HomeResponse, error) {
+func GetPostByCategoryId(categoryId, page, pageSize int) (*models.CategoryResponse, error) {
 	categorys, err := dao.GetAllCategory()
 	if err != nil {
 		return nil, err
 	}
 
 	// 获取文章部分
-	posts, err := dao.GetPostPage(page, pageSize)
+	posts, err := dao.GetPostPageByCateegoryId(categoryId, page, pageSize)
+
 	var postMores []models.PostMore
+	categoryName := dao.GetCategoryNameById(categoryId)
 	for _, post := range posts {
-		categoryName := dao.GetCategoryNameById(post.CategoryId)
 		userName := dao.GetUserNameById(post.UserId)
 		// 最多显示100个字符
 		s := []rune(post.Content)
@@ -53,7 +54,7 @@ func GetAllIndexInfo(page, pageSize int) (*models.HomeResponse, error) {
 	}
 
 	// 总数量
-	total := dao.CountGetAllPost()
+	total := dao.CountGetAllPostByCategoryId(categoryId)
 	// 页数
 	pageCount := (total-1)/pageSize + 1
 	// 页码切片
@@ -70,5 +71,9 @@ func GetAllIndexInfo(page, pageSize int) (*models.HomeResponse, error) {
 		pages,
 		page != pageCount,
 	}
-	return hr, nil
+	categoryReesponse := &models.CategoryResponse{
+		hr,
+		categoryName,
+	}
+	return categoryReesponse, nil
 }

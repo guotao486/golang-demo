@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-18 09:46:59
- * @LastEditTime: 2022-08-18 17:37:10
+ * @LastEditTime: 2022-08-20 10:34:21
  * @LastEditors: GG
  * @Description: router 路由文件
  * @FilePath: \golang-demo\blog\golang\router\router.go
@@ -25,11 +25,16 @@ func Router() {
 	resource()
 	// 路由， 响应路径
 	// api 返回json
-	http.HandleFunc("/", api.JSONAPI.Index)
+	// http.HandleFunc("/", api.JSONAPI.Index)
 	// 页面响应
+	http.HandleFunc("/", views.HTML.IndexHtml)
 	http.HandleFunc("/demo.html", views.HTML.DemoHtml)
 	http.HandleFunc("/index.html", views.HTML.IndexHtml)
+	http.HandleFunc("/c/", views.HTML.Category)
+	http.HandleFunc("/p/", views.HTML.Detail)
 	http.HandleFunc("/login", views.HTML.Login)
+	http.HandleFunc("/writing", views.HTML.Writing)
+
 	http.HandleFunc("/api/v1/login", api.JSONAPI.Login)
 
 }

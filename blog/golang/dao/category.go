@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-18 10:31:58
- * @LastEditTime: 2022-08-18 15:15:10
+ * @LastEditTime: 2022-08-20 09:59:51
  * @LastEditors: GG
  * @Description:category dao
  * @FilePath: \golang-demo\blog\golang\dao\category.go
@@ -14,7 +14,7 @@ import (
 	"log"
 )
 
-func GelAllCategory() ([]models.Category, error) {
+func GetAllCategory() ([]models.Category, error) {
 	sqlStr := "select * from blog_category"
 	rows, err := DB.Query(sqlStr)
 	if err != nil {

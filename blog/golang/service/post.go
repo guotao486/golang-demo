@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-19 14:34:23
- * @LastEditTime: 2022-08-20 10:44:22
+ * @LastEditTime: 2022-08-20 12:18:39
  * @LastEditors: GG
  * @Description:post service
  * @FilePath: \golang-demo\blog\golang\service\post.go
@@ -10,7 +10,6 @@
 package service
 
 import (
-	"fmt"
 	"golang-demo/blog/golang/config"
 	"golang-demo/blog/golang/dao"
 	"golang-demo/blog/golang/models"
@@ -60,6 +59,17 @@ func Writing() (*models.WritingRes, error) {
 		CdnURL:    config.Cfg.System.CdnURL,
 		Categorys: categorys,
 	}
-	fmt.Printf("wr.Categorys: %v\n", wr.Categorys)
 	return wr, nil
+}
+
+func GetPostById(pId int) (*models.Post, error) {
+	return dao.GetPostById(pId)
+}
+
+func SavePost(post *models.Post) (bool, error) {
+	return dao.SavePost(post)
+}
+
+func UpdatePost(post *models.Post) (bool, error) {
+	return dao.UpdatePost(post)
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-18 11:32:15
- * @LastEditTime: 2022-08-19 15:40:25
+ * @LastEditTime: 2022-08-20 11:55:12
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\blog\golang\dao\post.go
@@ -10,6 +10,7 @@
 package dao
 
 import (
+	"fmt"
 	"golang-demo/blog/golang/models"
 	"log"
 )
@@ -118,4 +119,31 @@ func GetPostById(pId int) (*models.Post, error) {
 	)
 
 	return post, nil
+}
+
+func SavePost(post *models.Post) (bool, error) {
+	sqlStr := "insert into blog_post (title,content,markdown,category_id,user_id,view_count,type,slug,create_at,update_at) values(?,?,?,?,?,?,?,?,?,?)"
+	row, err := DB.Exec(sqlStr, post.Title, post.Content, post.Markdown, post.CategoryId, post.UserId, post.ViewCount, post.Type, post.Slug, post.CreateAt, post.UpdateAt)
+	if err != nil {
+		log.Println("SavePost 执行错误：", err)
+		return false, err
+	}
+	pid, _ := row.LastInsertId()
+	fmt.Printf("pid: %v\npid:%T\n", pid, pid)
+	post.Pid = int(pid)
+	return true, nil
+}
+
+func UpdatePost(post *models.Post) (bool, error) {
+	sqlStr := "update blog_post set title=?,content=?,markdown=?,category_id=?,type=?,slug=?,update_at=? where pid=?"
+	row, err := DB.Exec(sqlStr, post.Title, post.Content, post.Markdown, post.CategoryId, post.Type, post.Slug, post.UpdateAt, post.Pid)
+	if err != nil {
+		log.Println(err)
+		return false, err
+	}
+
+	if count, err := row.RowsAffected(); count < 1 {
+		return false, err
+	}
+	return true, nil
 }

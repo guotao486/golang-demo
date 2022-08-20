@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-18 10:40:23
- * @LastEditTime: 2022-08-20 10:02:03
+ * @LastEditTime: 2022-08-20 14:53:25
  * @LastEditors: GG
  * @Description:category service
  * @FilePath: \golang-demo\blog\golang\service\index.go
@@ -16,14 +16,28 @@ import (
 	"html/template"
 )
 
-func GetAllIndexInfo(page, pageSize int) (*models.HomeResponse, error) {
+func GetAllIndexInfo(slug string, page, pageSize int) (*models.HomeResponse, error) {
 	categorys, err := dao.GetAllCategory()
 	if err != nil {
 		return nil, err
 	}
 
+	var posts []models.Post
+	var total int
+	if slug == "" {
+		// 获取文章
+		posts, err = dao.GetPostPage(page, pageSize)
+		// 总数量
+		total = dao.CountGetAllPost()
+	} else {
+		// 获取文章
+		posts, err = dao.GetPostPageBySlug(slug, page, pageSize)
+		// 总数量
+		total = dao.CountGetAllPostBySlug(slug)
+	}
+
 	// 获取文章部分
-	posts, err := dao.GetPostPage(page, pageSize)
+
 	var postMores []models.PostMore
 	for _, post := range posts {
 		categoryName := dao.GetCategoryNameById(post.CategoryId)
@@ -52,8 +66,6 @@ func GetAllIndexInfo(page, pageSize int) (*models.HomeResponse, error) {
 		postMores = append(postMores, postMore)
 	}
 
-	// 总数量
-	total := dao.CountGetAllPost()
 	// 页数
 	pageCount := (total-1)/pageSize + 1
 	// 页码切片

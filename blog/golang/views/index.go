@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-18 09:49:12
- * @LastEditTime: 2022-08-20 14:19:21
+ * @LastEditTime: 2022-08-20 14:50:53
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\blog\golang\views\index.go
@@ -11,11 +11,13 @@ package views
 
 import (
 	"errors"
+	"fmt"
 	"golang-demo/blog/golang/service"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"text/template"
 	"time"
 )
@@ -75,8 +77,12 @@ func (*HTMLApi) IndexHtml(w http.ResponseWriter, r *http.Request) {
 	if pageStr != "" {
 		page, err = strconv.Atoi(pageStr)
 	}
+	// slug
+	s := r.URL.Path
+	slug := strings.TrimPrefix(s, "/")
+	fmt.Printf("s: %v\n", s)
 	// 页面上涉及到的数据必须都有定义
-	hr, err := service.GetAllIndexInfo(page, pageSize)
+	hr, err := service.GetAllIndexInfo(slug, page, pageSize)
 	if err != nil {
 		log.Println("Index获取数据出错：", err)
 		t.Execute(w, errors.New("系统错误，请联系管理员!!"))

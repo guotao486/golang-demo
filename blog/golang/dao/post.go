@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-18 11:32:15
- * @LastEditTime: 2022-08-20 14:00:27
+ * @LastEditTime: 2022-08-20 14:52:56
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\blog\golang\dao\post.go
@@ -28,6 +28,12 @@ func CountGetAllPostByCategoryId(cateogryId int) (count int) {
 func CountGetAllPost() (count int) {
 	sqlStr := "select count(1) from blog_post"
 	rows := DB.QueryRow(sqlStr)
+	_ = rows.Scan(&count)
+	return
+}
+func CountGetAllPostBySlug(slug string) (count int) {
+	sqlStr := "select count(1) from blog_post where slug=?"
+	rows := DB.QueryRow(sqlStr, slug)
 	_ = rows.Scan(&count)
 	return
 }
@@ -92,7 +98,37 @@ func GetPostPage(page, pageSize int) ([]models.Post, error) {
 	}
 	return posts, nil
 }
-
+func GetPostPageBySlug(slug string, page, pageSize int) ([]models.Post, error) {
+	page = (page - 1) * pageSize
+	sqlStr := "select * from blog_post where slug=? limit ?,?"
+	rows, err := DB.Query(sqlStr, slug, page, pageSize)
+	if err != nil {
+		log.Panicln("GetPostPage 查询错误:", err)
+		return nil, err
+	}
+	var posts []models.Post
+	for rows.Next() {
+		var post models.Post
+		err := rows.Scan(
+			&post.Pid,
+			&post.Title,
+			&post.Content,
+			&post.Markdown,
+			&post.CategoryId,
+			&post.UserId,
+			&post.ViewCount,
+			&post.Type,
+			&post.Slug,
+			&post.CreateAt,
+			&post.UpdateAt,
+		)
+		if err != nil {
+			return nil, err
+		}
+		posts = append(posts, post)
+	}
+	return posts, nil
+}
 func GetPostPageByCateegoryId(categoryId, page, pageSize int) ([]models.Post, error) {
 	page = (page - 1) * pageSize
 	sqlStr := "select * from blog_post where category_id = ? limit ?,?"

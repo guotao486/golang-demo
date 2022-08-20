@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-20 10:57:15
- * @LastEditTime: 2022-08-20 12:16:53
+ * @LastEditTime: 2022-08-20 13:41:35
  * @LastEditors: GG
  * @Description:post api
  * @FilePath: \golang-demo\blog\golang\api\post.go
@@ -88,8 +88,8 @@ func (*JSONApi) SaveAndUpdatePost(w http.ResponseWriter, r *http.Request) {
 		common.Success(w, post)
 	case http.MethodPut:
 		fmt.Printf("params: %v\n", params["categoryId"])
-		cId := params["categoryId"].(float64)
-		categoryId := int(cId)
+		cId := params["categoryId"].(string)
+		categoryId, _ := strconv.Atoi(cId)
 		content := params["content"].(string)
 		markdown := params["markdown"].(string)
 		slug := params["slug"].(string)

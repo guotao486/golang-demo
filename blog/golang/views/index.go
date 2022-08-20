@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-18 09:49:12
- * @LastEditTime: 2022-08-18 14:59:29
+ * @LastEditTime: 2022-08-20 14:19:21
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\blog\golang\views\index.go
@@ -91,5 +91,5 @@ func GetNextName(strs []string, index int) string {
 	return strs[index+1]
 }
 func Date(layout string) string {
-	return time.Now().Format(layout)
+	return time.Now().Format("2006-01-02 15:04:05")
 }

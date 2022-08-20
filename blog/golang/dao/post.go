@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-18 11:32:15
- * @LastEditTime: 2022-08-20 11:55:12
+ * @LastEditTime: 2022-08-20 14:00:27
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\blog\golang\dao\post.go
@@ -31,7 +31,36 @@ func CountGetAllPost() (count int) {
 	_ = rows.Scan(&count)
 	return
 }
-
+func GetAllPost() ([]models.Post, error) {
+	sqlStr := "select * from blog_post"
+	rows, err := DB.Query(sqlStr)
+	if err != nil {
+		log.Println("GetAllPost 查询错误：", err)
+		return nil, err
+	}
+	var posts []models.Post
+	for rows.Next() {
+		var post models.Post
+		err := rows.Scan(
+			&post.Pid,
+			&post.Title,
+			&post.Content,
+			&post.Markdown,
+			&post.CategoryId,
+			&post.UserId,
+			&post.ViewCount,
+			&post.Type,
+			&post.Slug,
+			&post.CreateAt,
+			&post.UpdateAt,
+		)
+		if err != nil {
+			return nil, err
+		}
+		posts = append(posts, post)
+	}
+	return posts, nil
+}
 func GetPostPage(page, pageSize int) ([]models.Post, error) {
 	page = (page - 1) * pageSize
 	sqlStr := "select * from blog_post limit ?,?"

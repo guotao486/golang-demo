@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-17 17:23:35
- * @LastEditTime: 2022-08-20 10:39:25
+ * @LastEditTime: 2022-08-20 14:03:18
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\blog\golang\models\post.go
@@ -70,4 +70,11 @@ type WritingRes struct {
 	Title     string
 	CdnURL    string
 	Categorys []Category
+}
+
+type PigeonholeRes struct {
+	config.Viewer
+	config.SystemConfig
+	Categorys []Category
+	Lines     map[string][]Post
 }

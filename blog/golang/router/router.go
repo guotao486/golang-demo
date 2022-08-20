@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-18 09:46:59
- * @LastEditTime: 2022-08-20 10:59:42
+ * @LastEditTime: 2022-08-20 13:47:50
  * @LastEditors: GG
  * @Description: router 路由文件
  * @FilePath: \golang-demo\blog\golang\router\router.go
@@ -34,6 +34,7 @@ func Router() {
 	http.HandleFunc("/p/", views.HTML.Detail)
 	http.HandleFunc("/login", views.HTML.Login)
 	http.HandleFunc("/writing", views.HTML.Writing)
+	http.HandleFunc("/pigeonhole", views.HTML.Pigeonhole)
 
 	// api
 	http.HandleFunc("/api/v1/login", api.JSONAPI.Login)

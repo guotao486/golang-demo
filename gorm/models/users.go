@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-22 14:35:52
- * @LastEditTime: 2022-08-22 16:36:59
+ * @LastEditTime: 2022-08-22 17:46:20
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\gorm\models\users.go
@@ -20,10 +20,11 @@ type User struct {
 	Name         string
 	Email        string
 	Age          uint8
-	Birthday     *time.Time
+	Birthday     time.Time
 	MemberNumber sql.NullString
 	ActivatedAt  sql.NullTime
-	CreateAt     time.Time
-	UpdateAt     time.Time
-	DeleteAt     time.Time
+	CreateAt     time.Time `gorm:"autoCreateTime"`
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+	DeletedAt    time.Time
 }

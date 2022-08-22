@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-18 11:32:15
- * @LastEditTime: 2022-08-20 14:52:56
+ * @LastEditTime: 2022-08-22 11:01:54
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\blog\golang\dao\post.go
@@ -10,7 +10,6 @@
 package dao
 
 import (
-	"fmt"
 	"golang-demo/blog/golang/models"
 	"log"
 )
@@ -194,7 +193,6 @@ func SavePost(post *models.Post) (bool, error) {
 		return false, err
 	}
 	pid, _ := row.LastInsertId()
-	fmt.Printf("pid: %v\npid:%T\n", pid, pid)
 	post.Pid = int(pid)
 	return true, nil
 }
@@ -211,4 +209,23 @@ func UpdatePost(post *models.Post) (bool, error) {
 		return false, err
 	}
 	return true, nil
+}
+
+func GetPostByTitle(condtion string) ([]models.Post, error) {
+	sqlStr := "select pid,title from blog_post where title like ?"
+	rows, err := DB.Query(sqlStr, "%"+condtion+"%")
+	if err != nil {
+		log.Println("GetPostByTitle 查询错误:", err)
+		return nil, err
+	}
+
+	var posts []models.Post
+	for rows.Next() {
+		var post models.Post
+		rows.Scan(&post.Pid, &post.Title)
+
+		posts = append(posts, post)
+	}
+
+	return posts, nil
 }

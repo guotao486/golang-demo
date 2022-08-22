@@ -192,7 +192,7 @@ function initSearch() {
   function searchHandler(val) {
     if (!val) return (searchList = []);
     $.ajax({
-      url: "/api/v1/post/search?val=" + val,
+      url: "/api/v1/search?val=" + val,
       contentType: "application/json",
       success: function (res) {
         if (res.code !== 200) return alert(res.error);

@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-20 10:57:15
- * @LastEditTime: 2022-08-20 13:41:35
+ * @LastEditTime: 2022-08-22 10:57:09
  * @LastEditors: GG
  * @Description:post api
  * @FilePath: \golang-demo\blog\golang\api\post.go
@@ -11,7 +11,6 @@ package api
 
 import (
 	"errors"
-	"fmt"
 	"golang-demo/blog/golang/common"
 	"golang-demo/blog/golang/models"
 	"golang-demo/blog/golang/service"
@@ -87,7 +86,6 @@ func (*JSONApi) SaveAndUpdatePost(w http.ResponseWriter, r *http.Request) {
 		}
 		common.Success(w, post)
 	case http.MethodPut:
-		fmt.Printf("params: %v\n", params["categoryId"])
 		cId := params["categoryId"].(string)
 		categoryId, _ := strconv.Atoi(cId)
 		content := params["content"].(string)
@@ -118,4 +116,12 @@ func (*JSONApi) SaveAndUpdatePost(w http.ResponseWriter, r *http.Request) {
 		}
 		common.Success(w, post)
 	}
+}
+
+func (*JSONApi) Search(w http.ResponseWriter, r *http.Request) {
+	_ = r.ParseForm()
+
+	condtion := r.Form.Get("val")
+	searchResp, _ := service.SearchPost(condtion)
+	common.Success(w, searchResp)
 }

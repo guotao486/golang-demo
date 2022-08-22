@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-19 14:34:23
- * @LastEditTime: 2022-08-20 12:18:39
+ * @LastEditTime: 2022-08-22 11:10:29
  * @LastEditors: GG
  * @Description:post service
  * @FilePath: \golang-demo\blog\golang\service\post.go
@@ -72,4 +72,17 @@ func SavePost(post *models.Post) (bool, error) {
 
 func UpdatePost(post *models.Post) (bool, error) {
 	return dao.UpdatePost(post)
+}
+
+func SearchPost(condtion string) ([]models.SearchResp, error) {
+	posts, _ := dao.GetPostByTitle(condtion)
+	var searchResp []models.SearchResp
+	for _, post := range posts {
+		searchRes := models.SearchResp{
+			post.Pid,
+			post.Title,
+		}
+		searchResp = append(searchResp, searchRes)
+	}
+	return searchResp, nil
 }

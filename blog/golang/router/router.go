@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-18 09:46:59
- * @LastEditTime: 2022-08-20 13:47:50
+ * @LastEditTime: 2022-08-22 11:01:06
  * @LastEditors: GG
  * @Description: router 路由文件
  * @FilePath: \golang-demo\blog\golang\router\router.go
@@ -40,5 +40,6 @@ func Router() {
 	http.HandleFunc("/api/v1/login", api.JSONAPI.Login)
 	http.HandleFunc("/api/v1/post", api.JSONAPI.SaveAndUpdatePost) //修改会保存
 	http.HandleFunc("/api/v1/post/", api.JSONAPI.GetPost)          // 获取详情
+	http.HandleFunc("/api/v1/search", api.JSONAPI.Search)
 
 }

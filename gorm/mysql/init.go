@@ -1,24 +1,27 @@
 /*
  * @Author: GG
- * @Date: 2022-08-17 14:49:25
- * @LastEditTime: 2022-08-22 14:40:51
+ * @Date: 2022-08-22 14:48:12
+ * @LastEditTime: 2022-08-22 14:57:15
  * @LastEditors: GG
- * @Description:README
- * @FilePath: \golang-demo\gorm\index.go
+ * @Description:
+ * @FilePath: \golang-demo\gorm\mysql\init.go
  *
  */
-package main
+package mysql
 
 import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
-func main() {
+// gorm 使用内部的gormDB对象
+var DB *gorm.DB
+
+func init() {
 	dsn := "go_demo_gorm:123456@tcp(110.40.208.203:3306)/go_gorm?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
-
+	DB = db
 }

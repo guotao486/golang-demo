@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-22 14:35:52
- * @LastEditTime: 2022-08-23 16:05:21
+ * @LastEditTime: 2022-08-25 11:16:49
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\gorm\models\users.go
@@ -25,12 +25,15 @@ type User struct {
 	Age          uint8  `gorm:"default:18"`
 	Birthday     time.Time
 	MemberNumber sql.NullString
+	CompanyID    uint
+	Company      Company
 	ActivatedAt  sql.NullTime
 	CreateAt     time.Time `gorm:"autoCreateTime"`
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
-	DeletedAt    time.Time
-	CreditCard   CreditCard
+	DeletedAt    gorm.DeletedAt
+	CreditCard   []CreditCard
+	Languages    []Language `gorm:"many2many:user_language"`
 }
 
 // hook

@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-23 15:31:06
- * @LastEditTime: 2022-08-23 15:40:04
+ * @LastEditTime: 2022-08-25 10:47:53
  * @LastEditors: GG
  * @Description:creditCard models
  * @FilePath: \golang-demo\gorm\models\creditCard.go
@@ -19,6 +19,7 @@ type CreditCard struct {
 	gorm.Model
 	Number string
 	UserId uint
+	User   User
 }
 
 func (c *CreditCard) AfterCreate(tx *gorm.DB) (err error) {

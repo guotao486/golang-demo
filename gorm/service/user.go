@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-22 17:18:04
- * @LastEditTime: 2022-08-29 09:27:27
+ * @LastEditTime: 2022-08-29 15:13:50
  * @LastEditors: GG
  * @Description: User ation
  * @FilePath: \golang-demo\gorm\service\user.go
@@ -548,11 +548,4 @@ func UserRelatePreload(db *gorm.DB) {
 		fmt.Printf("c: %v\n", company)
 		fmt.Printf("company.Users: %v\n", company.Users)
 	}
-}
-
-func UserSelectDemo(db *gorm.DB) {
-	user := []models.User{}
-
-	db.Debug().Model(user).Find(user)
-
 }

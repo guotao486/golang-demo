@@ -1,0 +1,63 @@
+<!--
+ * @Author: GG
+ * @Date: 2022-08-30 11:06:56
+ * @LastEditTime: 2022-08-30 14:41:31
+ * @LastEditors: GG
+ * @Description: html template demo
+ * @FilePath: \golang-demo\template\index.html
+ * 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test golang template</title>
+</head>
+<body>
+    {{.}}<br/>
+   - xxx 去除前面空格，xxx - 去除后面空格<br/>
+    {{23}} < {{45}}<br>
+{{23}} < {{- 45}}<br/>
+{{23 -}} < {{45}}<br>
+{{23 -}} < {{- 45}}<br/>
+----------注释----------<br>
+{{/* 123 */}}
+{{/* a comment without prefix/suffix space */}}
+{{/* a comment without prefix/suffix space */}}
+{{- /* a comment without prefix/suffix space */ -}}
+------------管道---------<br/>
+{{`"output"`}}<br/>
+{{printf "%q" "output"}}<br/>
+{{"output" | printf "%q"}}<br/>
+{{printf "%q" (print "out" "put")}}<br/>
+{{"put" | printf "%s%s" "out" | printf "%q"}}<br/>
+{{"output" | printf "%s" | printf "%q"}}<br/>
+
+-----------变量----------<br/>
+{{$name := "tom"}}
+{{$name}}<br/>
+{{$name = "jak"}}
+{{$name}}<br/>
+----------判断----------<br/>
+{{$age := 15}}
+{{if (gt $age 18)}}
+age > 18
+{{else}}
+age < 18
+{{end}}
+<br/>
+----------循环----------<br/>
+{{range $x:= .}}
+{{println $x}}
+{{end}}
+------------------<br/>
+{{$bol := false}}
+{{$bol}}
+{{not $bol}}
+{{slice . 1}}
+{{slice . 1 2}}
+{{index . 0}}
+</body>
+</html>

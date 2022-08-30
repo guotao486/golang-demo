@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-29 17:31:01
- * @LastEditTime: 2022-08-29 17:34:52
+ * @LastEditTime: 2022-08-30 10:38:28
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\http\server\main.go
@@ -26,7 +26,7 @@ func test1() {
 	server.ListenAndServe()
 }
 
-//方式2
+//fangshi
 func test2() {
 	// 请求处理函数
 	f := func(resp http.ResponseWriter, req *http.Request) {

@@ -1,0 +1,5 @@
+INSERT INTO `payment_method` (`payment_method_id`, `code`, `name`, `description`, `account`, `md5key`, `submit_url`, `return_url`, `discount`, `status`, `is_inside`, `is_shield`, `is_default`, `sort_order`, `mark1`, `mark2`, `mark3`) VALUES (NULL, 'offlinepaypal', 'Pay With Paypal', '<img src="images/payment/paypal.gif" />', 'offlinepaypal', '', '', '', '0', '1', '0', '0', '0', '1', '', '', '');
+
+
+INSERT INTO `configuration` (`configuration_id`, `configuration_title`, `configuration_key`, `configuration_value`,  `configuration_group_id`, `date_added`, `last_modified`, `sort_order`, `function`) VALUES (NULL, 'OfflinePaypal“≥√Êƒ⁄»› ', 'STORE_PAYMENT_OFFLINEPAYPAL_CONTENT', 'we accept <span style="color:red">paypal and zelle</span> now , after placed  order, contact me through whatsapp instagram or imessage .<br/> Tell me your <span style="color:red"> order number  </span>, i will check and tell you our payment account and finished paying . <br/> Any info can also contact me <br/>  <br /> WhatsApp:852 95625452<br /> Instagram:@lozacat0318<br />', '1', '2013-03-12 10:40:53', '2022-08-04 11:15:26',  '2050', 'cfg_textarea(')
+

@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-08-31 16:40:03
- * @LastEditTime: 2022-09-02 15:14:37
+ * @LastEditTime: 2022-09-02 15:53:16
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\gin\demo\middleware\main.go
@@ -11,7 +11,9 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,8 +23,8 @@ func Demo(c *gin.Context) {
 }
 
 func Middleware1(c *gin.Context) {
-	fmt.Println("1")
-	c.String(http.StatusOK, "1")
+	fmt.Println("1111")
+	c.String(http.StatusOK, "11")
 }
 
 func Middleware2(c *gin.Context) {
@@ -49,6 +51,14 @@ func middleware_test() gin.HandlerFunc {
 }
 
 func main() {
+	// 写日志文件
+	// 禁用控制台颜色，将日志写入文件时不需要控制台颜色
+	gin.DisableConsoleColor()
+	f, _ := os.Create("gin.log")
+	// gin.DefaultWriter = io.MultiWriter(f)
+	// 同时写入文件和输出控制台
+	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+
 	e := gin.Default()
 	e.GET("/demo", Demo)
 
@@ -93,6 +103,10 @@ func main() {
 	}))
 	e.GET("/panic", func(c *gin.Context) {
 		panic("foo")
+	})
+
+	e.GET("/ping", func(c *gin.Context) {
+		c.String(http.StatusOK, "pong")
 	})
 	e.Run()
 }

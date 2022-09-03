@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-09-02 17:26:55
- * @LastEditTime: 2022-09-02 17:27:58
+ * @LastEditTime: 2022-09-03 10:11:41
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\gin\blog\dao\dao.go
@@ -25,6 +25,9 @@ type Manager interface {
 type manager struct {
 	db *gorm.DB
 }
+type demo struct {
+	n string
+}
 
 var Mgr Manager
 
@@ -35,7 +38,7 @@ func init() {
 		log.Fatal("Failed to init db:", err)
 	}
 	Mgr = &manager{db: db}
-	db.AutoMigrate(&models.User{})
+	// db.AutoMigrate(&models.User{})
 }
 
 func (mgr *manager) AddUser(user *models.User) {

@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-09-03 11:47:35
- * @LastEditTime: 2022-09-05 16:18:19
+ * @LastEditTime: 2022-09-06 15:42:23
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\gin\blog\router\router.go
@@ -29,5 +29,9 @@ func Start() {
 	e.GET("/register", controller.GoRegister)
 	e.POST("/register", controller.RegisterUser)
 
+	e.GET("/post_index", controller.GoPostIndex)
+	e.GET("/post", controller.GoAddPost)
+	e.POST("/post", controller.AddPost)
+	e.GET("/detail", controller.GetPost)
 	e.Run()
 }

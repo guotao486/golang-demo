@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-09-02 17:26:55
- * @LastEditTime: 2022-09-05 17:23:10
+ * @LastEditTime: 2022-09-06 15:36:17
  * @LastEditors: GG
  * @Description:
  * @FilePath: \golang-demo\gin\blog\dao\dao.go
@@ -61,7 +61,8 @@ func (mgr *manager) AddPost(post *models.Post) {
 }
 func (mgr *manager) GetAllPost() []models.Post {
 	var posts = make([]models.Post, 10)
-	mgr.db.Find(posts)
+	// posts := []models.Post{}
+	mgr.db.Find(&posts)
 	return posts
 }
 func (mgr *manager) GetPost(pid int) (post models.Post) {

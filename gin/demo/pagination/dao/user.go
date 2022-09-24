@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-09-23 17:02:19
- * @LastEditTime: 2022-09-23 17:17:48
+ * @LastEditTime: 2022-09-24 10:57:01
  * @LastEditors: GG
  * @Description:
  * @FilePath: \pagination\dao\user.go
@@ -16,7 +16,13 @@ import (
 
 func GetAllUsers(user *models.User, pagination *models.Pagination) ([]models.User, error) {
 	var users []models.User
+	var total int64
 
+	// 总数量
+	config.DB.Model(&models.User{}).Count(&total)
+	pagination.Total = int(total)
+	// 总页数
+	pagination.GetTotalPage()
 	// 分页查询
 	// page 1 limit 20   offset 0
 	// page 2 limit 20   offset 20

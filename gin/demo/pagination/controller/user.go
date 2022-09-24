@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-09-23 16:26:24
- * @LastEditTime: 2022-09-23 17:34:22
+ * @LastEditTime: 2022-09-24 11:08:16
  * @LastEditors: GG
  * @Description:
  * @FilePath: \pagination\controller\user.go
@@ -33,5 +33,6 @@ func GetAllUsers(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"data": list,
+		"page": pagination,
 	})
 }

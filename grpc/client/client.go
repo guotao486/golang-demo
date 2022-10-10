@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-10-07 15:33:01
- * @LastEditTime: 2022-10-07 17:29:19
+ * @LastEditTime: 2022-10-07 17:32:14
  * @LastEditors: GG
  * @Description:
  * @FilePath: \grpc\client\client.go
@@ -87,6 +87,7 @@ func StreamAction(c pb.GreeterClient) {
 	allStr, _ := c.StreamAction(context.Background())
 	go func() {
 		for {
+			// 接收
 			data, _ := allStr.Recv()
 			log.Println(data)
 		}
@@ -98,5 +99,6 @@ func StreamAction(c pb.GreeterClient) {
 			time.Sleep(time.Second)
 		}
 	}()
+	// 阻塞用
 	select {}
 }

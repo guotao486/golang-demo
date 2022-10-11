@@ -1,0 +1,222 @@
+basePath: /
+definitions:
+  models.Response:
+    properties:
+      data: {}
+      msg:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact:
+    name: go-swagger帮助文档
+    url: https://github.com/swaggo/swag/blob/master/README_zh-CN.md
+  description: gin+gorm crud 测试swagger
+  license:
+    name: Apache 2.0
+  title: gin+gorm crud 测试swagger（必填）
+  version: 1.0 （必填）
+paths:
+  /posts:
+    get:
+      consumes:
+      - application/json
+      description: 查询
+      parameters:
+      - description: "y"
+        in: body
+        maxLength: 100
+        minLength: 3
+        name: limit
+        required: true
+        schema:
+          type: string
+      - default: "1"
+        description: 状态
+        enum:
+        - "0"
+        - "1"
+        in: body
+        name: offset
+        required: true
+        schema:
+          type: string
+      - description: 创建者
+        in: body
+        maxLength: 100
+        minLength: 3
+        name: created_by
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: 查询
+      tags:
+      - posts
+    post:
+      consumes:
+      - application/json
+      description: 添加post
+      parameters:
+      - description: json
+        in: body
+        name: content
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: 添加post
+      tags:
+      - posts
+  /posts/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除post
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: 删除post
+      tags:
+      - posts
+    get:
+      consumes:
+      - application/json
+      description: 查询
+      parameters:
+      - description: pid
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: 查询
+      tags:
+      - posts
+    patch:
+      consumes:
+      - text/html
+      description: 修改post
+      parameters:
+      - description: pid
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: json
+        in: body
+        name: content
+        required: true
+        schema:
+          type: string
+      - description: title
+        in: body
+        name: title
+        required: true
+        schema:
+          type: string
+      - description: des
+        in: body
+        name: des
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: 修改post
+      tags:
+      - posts
+swagger: "2.0"

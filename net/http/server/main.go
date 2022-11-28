@@ -1,15 +1,16 @@
 /*
  * @Author: GG
  * @Date: 2022-08-29 17:31:01
- * @LastEditTime: 2022-08-30 10:38:28
+ * @LastEditTime: 2022-11-28 17:56:51
  * @LastEditors: GG
  * @Description:
- * @FilePath: \golang-demo\http\server\main.go
+ * @FilePath: \net\http\server\main.go
  *
  */
 package main
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -20,6 +21,10 @@ func test1() {
 	// 请求处理函数
 	f := func(resp http.ResponseWriter, req *http.Request) {
 		io.WriteString(resp, "hello world")
+		fmt.Println("处理逻辑")
+		fmt.Println("连接", req.RemoteAddr) // 127.0.0.1:49168
+		fmt.Println("url", req.URL.Path)  // /hello
+		fmt.Println("method", req.Method)
 	}
 	// 响应路径,注意前面要有斜杠 /
 	http.HandleFunc("/hello", f)

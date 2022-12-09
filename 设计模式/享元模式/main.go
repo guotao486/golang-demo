@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-12-09 10:31:32
- * @LastEditTime: 2022-12-09 10:50:43
+ * @LastEditTime: 2022-12-09 10:58:06
  * @LastEditors: GG
  * @Description: 享元模式
  * @FilePath: \设计模式\享元模式\main.go
@@ -11,6 +11,10 @@ package main
 
 import "fmt"
 
+/*
+ * 享元模式(Flyweight Pattern)只要用于减少创建对象的数量，以减少内存占用和提高性能。
+ * 享元模式尝试重用现有的同类对象，如果未找到匹配的对象，则创建新的对象
+ */
 // 模型接口
 type Shape interface {
 	Draw()

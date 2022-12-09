@@ -27,12 +27,6 @@ type Task interface {
 	Execute() bool // 执行方法
 }
 
-// 任务节点
-type TaskNode struct {
-	Name string // 任务名称
-	Task        // 任务对象
-}
-
 type Order struct{}
 
 func NewOrder() *Order {

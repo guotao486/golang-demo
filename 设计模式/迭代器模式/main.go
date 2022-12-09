@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2022-12-09 16:14:11
- * @LastEditTime: 2022-12-09 16:25:28
+ * @LastEditTime: 2022-12-09 16:28:06
  * @LastEditors: GG
  * @Description: 迭代器模式
  * @FilePath: \设计模式\迭代器模式\main.go
@@ -11,6 +11,10 @@ package main
 
 import "fmt"
 
+/*
+ * 迭代器模式(Iterator Pattern)用于顺序访问集合中的元素。
+ * 迭代器提供一种方法顺序访问一个对象各个元素，而无需暴露对象的内部表示。
+ */
 type Order struct {
 	Name string
 }

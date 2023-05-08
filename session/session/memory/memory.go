@@ -11,7 +11,7 @@ package memory
 
 import (
 	"container/list"
-	"src/demo/session/session"
+	"golang-demo/session/session"
 	"sync"
 	"time"
 )

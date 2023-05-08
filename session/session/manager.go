@@ -4,7 +4,6 @@ package session
 import (
 	"encoding/base64"
 	"fmt"
-	"math/rand"
 	"net/http"
 	"net/url"
 	"sync"
@@ -17,6 +16,7 @@ type Manager struct {
 	lock        sync.Mutex // protects session
 	provider    Provider
 	maxLifeTime int64
+	refurbish   int64
 }
 
 // 存储引擎桶
@@ -37,22 +37,30 @@ func Register(name string, provider Provider) {
 }
 
 // 初始化管理器
-func NewManager(provideName, cookieName string, maxLifeTime int64) (*Manager, error) {
+func NewManager(provideName, cookieName string, maxLifeTime int64, refurbish int64) (*Manager, error) {
 	provider, ok := provides[provideName]
 	if !ok {
 		return nil, fmt.Errorf("session: unknown provide %q (forgotten import?)", provideName)
 	}
-	return &Manager{provider: provider, cookieName: cookieName, maxLifeTime: maxLifeTime}, nil
+	return &Manager{provider: provider, cookieName: cookieName, maxLifeTime: maxLifeTime, refurbish: refurbish}, nil
 }
 
 // 生成全局唯一session id
 func (manager *Manager) sessionId() string {
-	b := make([]byte, 32)
-	if _, err := rand.Read(b); err != nil {
-		return ""
-	}
-	return base64.URLEncoding.EncodeToString(b)
+	guid := GetGUID().Hex()
+	return base64.URLEncoding.EncodeToString([]byte(guid))
 
+}
+
+func (manager *Manager) sessionCreate(w http.ResponseWriter) (session Session) {
+	sid := manager.sessionId()
+	fmt.Printf("sid: %v\n", sid)
+	session, _ = manager.provider.SessionInit(sid)
+	fmt.Println("session init createTime")
+	session.Set("createTime", time.Now().Unix())
+	cookie := http.Cookie{Name: manager.cookieName, Value: url.QueryEscape(sid), Path: "/", HttpOnly: true, MaxAge: int(manager.maxLifeTime)}
+	http.SetCookie(w, &cookie)
+	return
 }
 
 // 检测用户是否与session关联，没有则创建
@@ -61,14 +69,26 @@ func (manager *Manager) SessionStart(w http.ResponseWriter, r *http.Request) (se
 	defer manager.lock.Unlock()
 
 	cookie, err := r.Cookie(manager.cookieName)
-	if err != nil || cookie.Value == "" {
-		sid := manager.sessionId()
-		session, _ = manager.provider.SessionInit(sid)
-		cookie := http.Cookie{Name: manager.cookieName, Value: url.QueryEscape(sid), Path: "/", HttpOnly: true, MaxAge: int(manager.maxLifeTime)}
-		http.SetCookie(w, &cookie)
-	} else {
+
+	if err != nil || cookie.Value == "" { // 创建 session
+		session = manager.sessionCreate(w)
+	} else { // 获取关联session，更新session createTime,若createTime 失效则销毁重建
 		sid, _ := url.QueryUnescape(cookie.Value)
 		session, _ = manager.provider.SessionRead(sid)
+
+		if manager.refurbish > 0 {
+			// 间隔刷新新的session id 防止session劫持
+			createTime := session.Get("createTime")
+			if createTime == nil {
+				fmt.Println("session update createTime")
+				session.Set("createTime", time.Now().Unix())
+			} else if (createTime.(int64) + manager.refurbish) < (time.Now().Unix()) {
+				fmt.Println("session expiration createTime")
+				// manager.SessionDestroy(w, r)
+				manager.provider.SessionDestroy(sid)
+				session = manager.sessionCreate(w)
+			}
+		}
 	}
 	return
 }

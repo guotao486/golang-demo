@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2023-05-06 11:29:01
- * @LastEditTime: 2023-05-08 15:32:19
+ * @LastEditTime: 2023-05-10 16:05:48
  * @LastEditors: GG
  * @Description:
  * @FilePath: \session\main.go
@@ -13,6 +13,7 @@ import (
 	"golang-demo/session/controller"
 	"golang-demo/session/session"
 	_ "golang-demo/session/session/memory"
+	"golang-demo/session/session/mysql"
 	"net/http"
 )
 
@@ -21,7 +22,19 @@ var GlobalSessions *session.Manager
 
 // 全局初始化session管理器
 func init() {
-	GlobalSessions, _ = session.NewManager("memory", "gosessionid", 3600, 60)
+
+	// GlobalSessions, _ = session.NewManager("memory", "gosessionid", 3600, 60)
+
+	config := mysql.MysqlConfig{
+		TableName: "sessions",
+		Username:  "root",
+		Password:  "123456",
+		Host:      "127.0.0.1",
+		Port:      3306,
+		Database:  "go_demo",
+	}
+	mysql.InitDB(config)
+	GlobalSessions, _ = session.NewManager("mysql", "gosessionid", 3600, 60)
 	// 启动GC回收过期资源
 	go GlobalSessions.GC()
 }

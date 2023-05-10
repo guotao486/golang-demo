@@ -10,8 +10,8 @@ type Provider interface {
 
 // session 处理接口
 type Session interface {
-	Set(key, v interface{}) error    // set session value
-	Get(key interface{}) interface{} // get session value
-	Delete(key interface{}) error    // delete session value
-	SessionID() string               // back current session
+	Set(key string, v interface{}) error // set session value
+	Get(key string) interface{}          // get session value
+	Delete(key string) error             // delete session value
+	SessionID() string                   // back current session
 }

@@ -79,6 +79,12 @@ func (manager *Manager) SessionStart(w http.ResponseWriter, r *http.Request) (se
 		if manager.refurbish > 0 {
 			// 间隔刷新新的session id 防止session劫持
 			createTime := session.Get("createTime")
+			v, ok := createTime.(int64)
+			if !ok {
+				createTime = int64(v)
+			} else {
+				createTime = v
+			}
 			if createTime == nil {
 				fmt.Println("session update createTime")
 				session.Set("createTime", time.Now().Unix())

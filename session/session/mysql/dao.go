@@ -32,8 +32,6 @@ func (s *SessionDao) SetTableName(tableName string) {
 func (s *SessionDao) Create(session *SessionStore) error {
 	sql := fmt.Sprintf("insert into %s(session_id, value, create_time, accessed_time) values(?,?,?,?)", s.tableName)
 	valueStr, _ := json.Marshal(session.value)
-	fmt.Printf("valueStr: %v\n", valueStr)
-	fmt.Printf("session.value: %v\n", session.value)
 	ret, err := s.db.Exec(sql, session.sid, string(valueStr), time.Now().Unix(), time.Now().Unix())
 	if err != nil {
 		return err
@@ -67,8 +65,6 @@ func (s *SessionDao) Get(sid string) *Session {
 func (s *SessionDao) Set(sid string, value map[string]interface{}) error {
 	var valueStr []byte
 	valueStr, err := json.Marshal(value)
-	fmt.Printf("valueStr: %v\n", valueStr)
-	fmt.Printf("value: %v\n", value)
 	if err != nil {
 		return err
 	}
@@ -102,7 +98,7 @@ func (s *SessionDao) Delete(sid string) error {
 }
 
 func (s *SessionDao) UpdateAccessedTime(sid string) error {
-	sql := fmt.Sprintf("update %s set value = ? where accessed_time = ?", s.tableName)
+	sql := fmt.Sprintf("update %s set accessed_time = ? where session_id = ?", s.tableName)
 	ret, err := s.db.Exec(sql, time.Now().Unix(), sid)
 	if err != nil {
 		return err
@@ -162,7 +158,7 @@ func (s *SessionDao) DeleteBatch(sessionIDs []string) error {
 // 更改session_id
 func (s *SessionDao) UpdateSessionID(sid, newSid string) error {
 	sql := fmt.Sprintf("update %s set session_id = ? where session_id = ?", s.tableName)
-	ret, err := s.db.Exec(sql, sid, newSid)
+	ret, err := s.db.Exec(sql, newSid, sid)
 	if err != nil {
 		return err
 	}

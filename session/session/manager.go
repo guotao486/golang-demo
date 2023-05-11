@@ -37,6 +37,14 @@ func Register(name string, provider Provider) {
 }
 
 // 初始化管理器
+//
+// @param string provider 供应者
+//
+// @param string cookieName cookie名称
+//
+// @param int64 maxLifeTime 最大寿命
+//
+// @param int64 refurbish 刷新时间 0 不刷新
 func NewManager(provideName, cookieName string, maxLifeTime int64, refurbish int64) (*Manager, error) {
 	provider, ok := provides[provideName]
 	if !ok {
@@ -52,6 +60,7 @@ func (manager *Manager) sessionId() string {
 
 }
 
+// 创建
 func (manager *Manager) sessionCreate(w http.ResponseWriter) (session Session) {
 	sid := manager.sessionId()
 	fmt.Printf("sid: %v\n", sid)
@@ -59,6 +68,16 @@ func (manager *Manager) sessionCreate(w http.ResponseWriter) (session Session) {
 	fmt.Println("session init createTime")
 	session.Set("createTime", time.Now().Unix())
 	cookie := http.Cookie{Name: manager.cookieName, Value: url.QueryEscape(sid), Path: "/", HttpOnly: true, MaxAge: int(manager.maxLifeTime)}
+	http.SetCookie(w, &cookie)
+	return
+}
+
+// 刷新
+func (manager *Manager) sessionRefurbish(sid string, w http.ResponseWriter) (session Session) {
+	newsid := manager.sessionId()
+	session, _ = manager.provider.SessionRefurbish(sid, newsid)
+	session.Set("createTime", time.Now().Unix())
+	cookie := http.Cookie{Name: manager.cookieName, Value: url.QueryEscape(newsid), Path: "/", HttpOnly: true, MaxAge: int(manager.maxLifeTime)}
 	http.SetCookie(w, &cookie)
 	return
 }
@@ -79,20 +98,11 @@ func (manager *Manager) SessionStart(w http.ResponseWriter, r *http.Request) (se
 		if manager.refurbish > 0 {
 			// 间隔刷新新的session id 防止session劫持
 			createTime := session.Get("createTime")
-			v, ok := createTime.(int64)
-			if !ok {
-				createTime = int64(v)
-			} else {
-				createTime = v
-			}
+
 			if createTime == nil {
-				fmt.Println("session update createTime")
 				session.Set("createTime", time.Now().Unix())
 			} else if (createTime.(int64) + manager.refurbish) < (time.Now().Unix()) {
-				fmt.Println("session expiration createTime")
-				// manager.SessionDestroy(w, r)
-				manager.provider.SessionDestroy(sid)
-				session = manager.sessionCreate(w)
+				session = manager.sessionRefurbish(sid, w)
 			}
 		}
 	}

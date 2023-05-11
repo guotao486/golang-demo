@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2023-05-06 10:26:42
- * @LastEditTime: 2023-05-06 11:25:01
+ * @LastEditTime: 2023-05-11 10:33:20
  * @LastEditors: GG
  * @Description:
  * @FilePath: \session\session\memory\memory.go
@@ -47,6 +47,16 @@ func (st *SessionStore) Delete(key string) error {
 
 func (st *SessionStore) SessionID() string {
 	return st.sid
+}
+
+func (st *SessionStore) GetValue() map[string]interface{} {
+	pder.SessionUpdate(st.sid)
+	return st.value
+}
+
+func (st *SessionStore) SetValue(v map[string]interface{}) {
+	st.value = v
+	pder.SessionUpdate(st.sid)
 }
 
 type Provider struct {
@@ -100,6 +110,15 @@ func (pder *Provider) SessionGC(maxLifeTime int64) {
 		}
 	}
 
+}
+
+func (pder *Provider) SessionRefurbish(sid string, newsid string) (session.Session, error) {
+	olse, _ := pder.SessionRead(sid)
+	nese, _ := pder.SessionInit(newsid)
+	nese.SetValue(olse.GetValue())
+	pder.SessionDestroy(sid)
+	pder.SessionUpdate(newsid)
+	return nese, nil
 }
 
 // 更新最后访问时间

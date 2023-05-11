@@ -1,7 +1,7 @@
 /*
  * @Author: GG
  * @Date: 2023-05-06 11:29:01
- * @LastEditTime: 2023-05-10 16:05:48
+ * @LastEditTime: 2023-05-11 17:24:38
  * @LastEditors: GG
  * @Description:
  * @FilePath: \session\main.go
@@ -34,7 +34,7 @@ func init() {
 		Database:  "go_demo",
 	}
 	mysql.InitDB(config)
-	GlobalSessions, _ = session.NewManager("mysql", "gosessionid", 3600, 60)
+	GlobalSessions, _ = session.NewManager("mysql", "gosessionid", 120, 0)
 	// 启动GC回收过期资源
 	go GlobalSessions.GC()
 }

@@ -39,6 +39,14 @@ func (st *SessionStore) Set(key string, value interface{}) error {
 func (st *SessionStore) Get(key string) interface{} {
 	pder.SessionUpdate(st.sid)
 	if v, ok := st.value[key]; ok {
+		if key == "createTime" {
+			switch v.(type) {
+			case float64:
+				return int64(v.(float64))
+			case int64:
+				return v.(int64)
+			}
+		}
 		return v
 	} else {
 		return nil
@@ -56,6 +64,17 @@ func (st *SessionStore) SessionID() string {
 	return st.sid
 }
 
+func (st *SessionStore) GetValue() map[string]interface{} {
+	pder.SessionUpdate(st.sid)
+	return st.value
+}
+
+func (st *SessionStore) SetValue(v map[string]interface{}) {
+	st.value = v
+	dao.Set(st.sid, st.value)
+	pder.SessionUpdate(st.sid)
+}
+
 type Provider struct {
 	lock     sync.Mutex // 锁
 	sessions []*SessionStore
@@ -71,9 +90,7 @@ func (pder *Provider) SessionInit(sid string) (session.Session, error) {
 }
 
 func (pder *Provider) SessionRead(sid string) (session.Session, error) {
-	fmt.Println("session mysql store")
 	session := dao.Get(sid)
-
 	if session != nil {
 		element := &SessionStore{
 			sid:          session.SessionID,
@@ -110,6 +127,17 @@ func (pder *Provider) SessionGC(maxLifeTime int64) {
 		dao.DeleteBatch(elements)
 		break
 	}
+}
+
+func (pder *Provider) SessionRefurbish(sid string, newsid string) (session.Session, error) {
+	pder.SessionUpdate(sid)
+	pder.lock.Lock()
+	e := dao.UpdateSessionID(sid, newsid)
+	pder.lock.Unlock()
+	if e == nil {
+		return pder.SessionRead(newsid)
+	}
+	return nil, nil
 }
 
 // 更新最后访问时间
@@ -152,7 +180,6 @@ func InitDB(config MysqlConfig) {
 		`UNIQUE INDEX(session_id)` +
 		`)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;`
 	smt, err := db.Prepare(tablesql)
-	fmt.Printf("err: %v\n", err)
 	fmt.Printf("\n %s \n", tablesql)
 	smt.Exec()
 
